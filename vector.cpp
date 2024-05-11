@@ -39,6 +39,10 @@ template <typename T> const std::optional<T> vector<T>::pop() {
     return array.get()[m_size];
 }
 
+template <typename T> void vector<T>::for_each(std::function<void(const T&)> func) const {
+    for (size_t i = 0; i < m_size; ++i) func(*get(i));
+}
+
 int main() {
     vector<int> v1;
     assert(v1.size() == 0);

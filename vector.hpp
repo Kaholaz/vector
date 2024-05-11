@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <optional>
+#include <functional>
 
 template<typename T> class vector {
 private:
@@ -17,5 +18,7 @@ public:
     void push(const T &elm);
     const std::optional<T* const> get(int index) const;
     const std::optional<T> pop();
+
+    void for_each(std::function<void(const T&)> func) const;
 };
 #endif
