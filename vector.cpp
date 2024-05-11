@@ -46,12 +46,13 @@ template <typename T> const std::optional<T> vector<T>::pop() {
 }
 
 template <typename T> void vector<T>::for_each(std::function<void(const T&)> func) const {
-    for (size_t i = 0; i < m_size; ++i) func(*get(i));
+    for (size_t i = 0; i < m_size; ++i) func(array[i]);
 }
 
 template <typename T> vector<T> vector<T>::map(std::function<T(const T&)> func) const {
     vector<T> out = *this;
     for (size_t i = 0; i < m_size; ++i) out.array[i] = func(out.array[i]);
+    return out;
 }
 
 int main() {
@@ -79,5 +80,18 @@ int main() {
     
     vector<int> empty;
     assert(!empty.pop().has_value());
+
+    vector<int> v3;
+    for (size_t i = 0; i < 17; ++i) {
+        v3.push(i);
+    }
+
+    size_t i = 0;
+    v3.for_each([&](const int &x){assert(i == x); ++i;});
+
+    i = 0;
+    auto v4 = v3.map([](const int &x){return x*2;});
+    v4.for_each([&](const int &x){assert(i == x); i += 2;});
+
     return 0;
 }
