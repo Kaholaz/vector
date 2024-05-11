@@ -5,6 +5,12 @@
 
 template <typename T> vector<T>::vector() : m_cap(8), m_size(0), array(new T[m_cap]) { };
 
+template <typename T> vector<T>::vector(const vector<T> &vec) : m_cap(vec.m_cap), m_size(vec.m_size), array(new T[m_cap]) {
+    for (size_t i = 0; i < m_size; ++i) {
+        array[i] = vec.array[i];
+    }
+}
+
 template <typename T> vector<T>::~vector() = default;
 
 template <typename T> int vector<T>::size() const {
@@ -41,6 +47,11 @@ template <typename T> const std::optional<T> vector<T>::pop() {
 
 template <typename T> void vector<T>::for_each(std::function<void(const T&)> func) const {
     for (size_t i = 0; i < m_size; ++i) func(*get(i));
+}
+
+template <typename T> vector<T> vector<T>::map(std::function<T(const T&)> func) const {
+    vector<T> out = *this;
+    for (size_t i = 0; i < m_size; ++i) out.array[i] = func(out.array[i]);
 }
 
 int main() {

@@ -12,6 +12,7 @@ private:
     std::unique_ptr<T[]> array;
 public:
     vector();
+    vector(const vector<T> &vec);
     ~vector();
 
     int size() const;
@@ -20,5 +21,6 @@ public:
     const std::optional<T> pop();
 
     void for_each(std::function<void(const T&)> func) const;
+    vector<T> map(std::function<T(const T&)> func) const;
 };
 #endif
